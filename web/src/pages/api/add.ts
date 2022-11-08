@@ -86,13 +86,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const quoteResult = await tryHandleQuote(payload);
 
     const response = new MessagingResponse();
-    let status = 400;
     if (!wordResult && !quoteResult)
       response.message("Could not save content.");
-    else {
-      response.message("Content saved.");
-      status = 200;
-    }
+    else response.message("Content saved.");
 
     // const payload = new Map();
     // content.split('\n').forEach((line: string) => {
@@ -133,7 +129,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // }
 
     // response.message(message);
-    res.writeHead(status, { "Content-Type": "text/xml" });
+    res.writeHead(200, { "Content-Type": "text/xml" });
     res.end(response.toString());
   }
 };
