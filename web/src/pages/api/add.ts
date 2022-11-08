@@ -1,23 +1,23 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import twilio from "twilio";
 import { string, z } from "zod";
-import { env } from "@/env/server.mjs";
 import { createWord } from "@/server/functions/words";
 import { createQuote } from "@/server/functions/quotes";
-import { Prisma, Quote } from "@prisma/client";
 import { getErrorMessage } from "@/utils/functions";
 
-const client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 const MessagingResponse = twilio.twiml.MessagingResponse;
 
 const parsePayload = (data: string) => {
   const payload = new Map();
-  data.split("\n").forEach((line: string) => {
-    const segments = line.split(":");
-    const key = segments[0]?.toLowerCase();
-    const value = segments[1]?.toLowerCase();
-    if (key && value) payload.set(key, value);
-  });
+  data
+    .trim()
+    .split("\n")
+    .forEach((line: string) => {
+      const segments = line.split(":");
+      const key = segments[0]?.toLowerCase().trim();
+      const value = segments[1]?.toLowerCase().trim();
+      if (key && value) payload.set(key, value);
+    });
   return Object.fromEntries(payload.entries());
 };
 
@@ -49,17 +49,8 @@ const tryParseQuote = (data: unknown) => {
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "GET") {
-    client.messages.create({
-      body: "Testing from Twilio",
-      from: env.TWILIO_PHONE,
-      to: env.TWILIO_PHONE_TO,
-    });
-    res.status(200).json({ message: "Hello" });
-  }
-
   if (req.method === "POST") {
-    console.log("Received payload:", req.body);
+    console.log("Received payload:", req.body.Body);
 
     const response = new MessagingResponse();
     const payload = parsePayload(req.body.Body);
