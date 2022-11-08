@@ -48,31 +48,35 @@ const tryParseQuote = (data: unknown) => {
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "POST") {
-    console.log("Received payload:", req.body.Body);
+  console.log("Received request to add content:", req.method);
 
+  if (req.method === "POST") {
     const response = new MessagingResponse();
     const payload = parsePayload(req.body.Body);
     const word = tryParseWord(payload);
     const quote = tryParseQuote(payload);
+    let message = "Invalid payload.";
+
+    console.log("Payload:", payload);
 
     if (word !== null) {
       try {
         await createWord(word.word, word.pos, word.definition);
-        response.message("Word added successfully.");
+        message = "Word added successfully.";
       } catch (e) {
-        response.message(getErrorMessage(e));
+        message = getErrorMessage(e);
       }
     } else if (quote !== null) {
       try {
         await createQuote(quote.quote, quote.source);
-        response.message("Quote added successfully.");
+        message = "Quote added successfully.";
       } catch (e) {
-        response.message(getErrorMessage(e));
+        message = getErrorMessage(e);
       }
-    } else {
-      response.message("Invalid payload.");
     }
+
+    console.log(message);
+    response.message(message);
     res.writeHead(200, { "Content-Type": "text/xml" });
     res.end(response.toString());
   }
