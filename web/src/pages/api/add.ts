@@ -91,7 +91,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       response.message("Could not save content.");
     else {
       response.message("Content saved.");
-      status = 204;
+      status = 200;
     }
 
     // const payload = new Map();
