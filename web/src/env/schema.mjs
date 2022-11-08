@@ -12,6 +12,7 @@ export const serverSchema = z.object({
   TWILIO_ACCOUNT_SID: z.string(),
   TWILIO_AUTH_TOKEN: z.string(),
   TWILIO_PHONE: z.string(),
+  TWILIO_PHONE_TO: z.string()
 });
 
 /**

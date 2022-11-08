@@ -10,7 +10,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     client.messages.create({
       body: "Testing from Twilio",
       from: env.TWILIO_PHONE,
-      to: '+16316264975'
+      to: env.TWILIO_PHONE_TO
     })
     res.status(200).json({message: "Hello"})
   }
