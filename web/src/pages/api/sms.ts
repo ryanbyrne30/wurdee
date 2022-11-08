@@ -2,7 +2,12 @@ import { type NextApiRequest, type NextApiResponse } from "next";
 import twilio from "twilio";
 import { string, z } from "zod";
 import { getErrorMessage } from "@/utils/functions";
-import { createQuote, createWord } from "@/server/functions/content";
+import {
+  createQuote,
+  createWord,
+  getRandomContent,
+} from "@/server/functions/content";
+import { Quote, Word } from "@prisma/client";
 
 const MessagingResponse = twilio.twiml.MessagingResponse;
 
@@ -103,6 +108,28 @@ text "hello"
   res.end(response.toString());
 };
 
+const formatQuote = (quote: Quote) => {
+  return `${quote.quote}\n\nsource: ${quote.source}`;
+};
+
+const formatWord = (word: Word) => {
+  return `${word.word}\n\npos: ${word.pos}\n\n${word.definition}`;
+};
+
+const handleHello = async (req: NextApiRequest, res: NextApiResponse) => {
+  const content = await getRandomContent();
+
+  const response = new MessagingResponse();
+  let message = "No content available.";
+
+  if (content !== null && !!content.quote) message = formatQuote(content.quote);
+  if (content !== null && !!content.word) message = formatWord(content.word);
+
+  response.message(message);
+  res.writeHead(200, { "Content-Type": "text/xml" });
+  res.end(response.toString());
+};
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log("Received request to add content:", req.method);
 
@@ -110,6 +137,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const body = req.body.Body;
     if (["help", "h"].includes(body.toLowerCase().trim())) {
       handleHelp(req, res);
+    } else if (["hello", "hi", "hey"].includes(body.toLowerCase().trim())) {
+      await handleHello(req, res);
     } else {
       await handleAdd(req, res);
     }
