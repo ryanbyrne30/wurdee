@@ -59,3 +59,33 @@ export async function createWord(
     },
   });
 }
+
+export async function createQuotes(input: { quote: string; source: string }[]) {
+  await Promise.all(
+    input.map(async (i) => {
+      try {
+        await createQuote(i.quote, i.source);
+      } catch (e) {
+        console.log(e);
+      }
+    })
+  );
+}
+
+export async function createWords(
+  input: {
+    word: string;
+    pos: "noun" | "verb" | "adjective" | "adverb";
+    definition: string;
+  }[]
+) {
+  await Promise.all(
+    input.map(async (i) => {
+      try {
+        await createWord(i.word, i.pos, i.definition);
+      } catch (e) {
+        console.log(e);
+      }
+    })
+  );
+}

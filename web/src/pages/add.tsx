@@ -101,6 +101,109 @@ function WordForm({
   );
 }
 
+function AddQuoteBulk({
+  setError,
+}: {
+  setError: Dispatch<SetStateAction<string | null>>;
+}) {
+  const quoteRef = useRef<HTMLTextAreaElement>(null);
+  const mutation = trpc.content.addQuotes.useMutation();
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const input = quoteRef.current?.value;
+    if (input === undefined) return;
+    const parsed = z
+      .array(
+        z.object({
+          quote: z
+            .string()
+            .transform((s) => s.trim().replace("-\n", "").replace("\n", " ")),
+          source: z.string().transform((s) => s.trim()),
+        })
+      )
+      .safeParse(JSON.parse(input));
+
+    if (!parsed.success) return setError(parsed.error.message);
+    mutation.mutate(parsed.data);
+  };
+
+  if (mutation.isSuccess) {
+    alert("Quotes added successfully.");
+    window.location.replace("/");
+  }
+
+  return (
+    <form onSubmit={onSubmit}>
+      <div className="group">
+        <p>
+          Format as json. List of objects with keys of &quot;quote&quot; and
+          &quot;source&quot;.
+        </p>
+      </div>
+      <div className="group">
+        <label>Quotes</label>
+        <textarea
+          ref={quoteRef}
+          placeholder='[{"quote": "Hello", "source": "Adele"}, ...]'
+        />
+      </div>
+      <button>Add</button>
+    </form>
+  );
+}
+
+function AddWordsBulk({
+  setError,
+}: {
+  setError: Dispatch<SetStateAction<string | null>>;
+}) {
+  const quoteRef = useRef<HTMLTextAreaElement>(null);
+  const mutation = trpc.content.addWords.useMutation();
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const input = quoteRef.current?.value;
+    if (input === undefined) return;
+    const parsed = z
+      .array(
+        z.object({
+          word: z.string().transform((s) => s.trim()),
+          pos: z.enum(["noun", "verb", "adjective", "adverb"]),
+          definition: z.string().transform((s) => s.trim()),
+        })
+      )
+      .safeParse(JSON.parse(input));
+
+    if (!parsed.success) return setError(parsed.error.message);
+    mutation.mutate(parsed.data);
+  };
+
+  if (mutation.isSuccess) {
+    alert("Words added successfully.");
+    window.location.replace("/");
+  }
+
+  return (
+    <form onSubmit={onSubmit}>
+      <div className="group">
+        <p>
+          Format as json. List of objects with keys of &quot;word&quot;,
+          &quot;pos&quot; and &quot;definition&quot;.
+        </p>
+      </div>
+      <div className="group">
+        <label>Words</label>
+        <textarea
+          ref={quoteRef}
+          placeholder='[{"word": "muffin", "pos": "noun", "definition": "something delicious"}, ...]'
+        />
+      </div>
+      <button>Add</button>
+    </form>
+  );
+}
+
 export default function AddPage() {
   const [state, setState] = useState<string>("quote");
   const [error, setError] = useState<string | null>(null);
@@ -108,15 +211,22 @@ export default function AddPage() {
   return (
     <div className="flex flex-col items-center">
       <span className="italic text-red-500">{error}</span>
-      <select onChange={(e) => setState(e.currentTarget.value)}>
+      <select
+        onChange={(e) => {
+          setError(null);
+          setState(e.currentTarget.value);
+        }}
+      >
         <option value="quote">Quote</option>
         <option value="word">Word</option>
+        <option value="quote-bulk">Quote Bulk</option>
+        <option value="word-bulk">Word Bulk</option>
       </select>
-      {state === "quote" ? (
-        <QuoteForm setError={setError} />
-      ) : (
-        <WordForm setError={setError} />
-      )}
+
+      {state === "quote" && <QuoteForm setError={setError} />}
+      {state === "word" && <WordForm setError={setError} />}
+      {state === "quote-bulk" && <AddQuoteBulk setError={setError} />}
+      {state === "word-bulk" && <AddWordsBulk setError={setError} />}
     </div>
   );
 }

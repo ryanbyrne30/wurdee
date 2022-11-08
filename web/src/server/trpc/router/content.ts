@@ -1,6 +1,8 @@
 import {
   createQuote,
+  createQuotes,
   createWord,
+  createWords,
   getRandomContent,
 } from "@/server/functions/content";
 import { z } from "zod";
@@ -32,4 +34,25 @@ export const contentRouter = router({
       async ({ input }) =>
         await createWord(input.word, input.pos, input.definition)
     ),
+  addQuotes: publicProcedure
+    .input(
+      z.array(
+        z.object({
+          source: z.string().transform((s) => s.trim()),
+          quote: z.string().transform((s) => s.trim()),
+        })
+      )
+    )
+    .mutation(async ({ input }) => await createQuotes(input)),
+  addWords: publicProcedure
+    .input(
+      z.array(
+        z.object({
+          word: z.string().transform((s) => s.trim()),
+          pos: z.enum(["noun", "verb", "adjective", "adverb"]),
+          definition: z.string().transform((s) => s.trim()),
+        })
+      )
+    )
+    .mutation(async ({ input }) => await createWords(input)),
 });
