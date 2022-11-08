@@ -1,9 +1,8 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import twilio from "twilio";
 import { string, z } from "zod";
-import { createWord } from "@/server/functions/words";
-import { createQuote } from "@/server/functions/quotes";
 import { getErrorMessage } from "@/utils/functions";
+import { createQuote, createWord } from "@/server/functions/content";
 
 const MessagingResponse = twilio.twiml.MessagingResponse;
 

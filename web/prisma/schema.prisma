@@ -17,21 +17,37 @@ generator js {
   previewFeatures = ["referentialIntegrity"]
 }
 
+model Content {
+  id      String @id @default(cuid())
+  queried Int    @default(0)
+
+  word    Word?   @relation(fields: [wordId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  wordId  String?
+  quote   Quote?  @relation(fields: [quoteId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  quoteId String?
+
+  firstShown DateTime?
+  lastShown  DateTime? @updatedAt
+  createdAt  DateTime  @default(now())
+}
+
 model Word {
-  id         String   @id @default(cuid())
+  id         String @id @default(cuid())
   word       String
   pos        String
   definition String
-  createdAt  DateTime @default(now())
+
+  Content Content[]
 
   @@unique([word])
 }
 
 model Quote {
-  id        String   @id @default(cuid())
-  source    String
-  quote     String
-  createdAt DateTime @default(now())
+  id     String @id @default(cuid())
+  source String
+  quote  String
+
+  Content Content[]
 
   @@unique([source, quote])
 }
