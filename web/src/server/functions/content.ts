@@ -1,13 +1,15 @@
+import { randomChoice } from "@/utils/functions";
 import { prisma } from "../db/client";
 
 export async function getRandomContent() {
+  const count = await prisma.content.count();
   const content = await prisma.content.findFirst({
-    orderBy: {
-      lastShown: { sort: "asc", nulls: "first" },
-    },
-    select: { id: true, queried: true, firstShown: true },
+    skip: randomChoice(count),
+    include: { quote: true, word: true },
   });
   if (content === null) return null;
+
+  // update entry
   const updatedContent = await prisma.content.update({
     where: { id: content.id },
     data: {
