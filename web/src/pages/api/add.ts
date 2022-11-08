@@ -17,7 +17,7 @@ const parsePayload = (data: string) => {
         .replaceAll("-\n", "")
         .split(":");
       const key = segments[0]?.toLowerCase().trim();
-      const value = segments[1]?.toLowerCase().trim();
+      const value = segments[1]?.trim();
       if (key && value) payload.set(key, value);
     });
   return Object.fromEntries(payload.entries());

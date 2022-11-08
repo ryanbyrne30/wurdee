@@ -45,9 +45,7 @@ model Word {
 model Quote {
   id     String @id @default(cuid())
   source String
-  quote  String
+  quote  String @db.LongText
 
   Content Content[]
-
-  @@unique([source, quote])
 }
