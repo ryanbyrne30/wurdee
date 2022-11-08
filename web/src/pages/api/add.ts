@@ -1,9 +1,9 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import twilio from 'twilio';
 import { string, z } from "zod";
-import { env } from "../../env/server.mjs";
-import { createQuote } from "../../server/functions/quotes.js";
-import { createWord } from "../../server/functions/words.js";
+import { env } from "@/env/server.mjs";
+import { createWord } from "@/server/functions/words";
+import { createQuote } from "@/server/functions/quotes";
 
 const client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 const MessagingResponse = twilio.twiml.MessagingResponse;
