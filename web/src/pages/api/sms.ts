@@ -84,21 +84,19 @@ const handleAdd = async (req: NextApiRequest, res: NextApiResponse) => {
 const handleHelp = (req: NextApiRequest, res: NextApiResponse) => {
   const response = new MessagingResponse();
   response.message(`
-To add a quote:
+==To add a quote==
 quote: <your_quote>
 
 source: <some_source>
-___
 
-To add a word:
+==To add a word==
 word: <your_word>
 
 pos: <noun|verb|adjective|adverb>
 
 definition: <the_definition>
-___
 
-To receive something:
+==To receive something==
 text "hello"
   `);
   res.writeHead(200, { "Content-Type": "text/xml" });
