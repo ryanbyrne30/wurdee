@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+  @apply bg-slate-900 text-white flex flex-col items-center justify-center h-screen w-screen;
+}
+
+form {
+  @apply max-w-lg w-screen p-4 flex flex-col items-center;
+}
+
+label {
+  @apply text-sm opacity-80 font-bold mb-1;
+}
+
+button {
+  @apply px-6 py-2 shadow-md bg-slate-500 rounded w-fit m-1;
+}
+
+input, textarea, select {
+  @apply rounded bg-white text-black p-2;
+}
+
+.group {
+  @apply flex flex-col py-4 w-full;
+}

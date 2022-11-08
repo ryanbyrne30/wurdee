@@ -1,5 +1,4 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { prisma } from "../../server/db/client";
 import twilio from 'twilio';
 import { env } from "../../env/server.mjs";
 

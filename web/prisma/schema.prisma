@@ -16,3 +16,22 @@ generator js {
   provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
+
+model Word {
+  id         String   @id @default(cuid())
+  word       String
+  pos        String
+  definition String
+  createdAt  DateTime @default(now())
+
+  @@unique([word])
+}
+
+model Quote {
+  id        String   @id @default(cuid())
+  source    String
+  quote     String
+  createdAt DateTime @default(now())
+
+  @@unique([source, quote])
+}
