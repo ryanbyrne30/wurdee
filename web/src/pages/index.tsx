@@ -1,5 +1,4 @@
-import { useInterval } from "@/hooks/useInterval";
-import { Content, Quote, Word } from "@prisma/client";
+import type { Content, Quote, Word } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { trpc } from "../utils/trpc";
 
