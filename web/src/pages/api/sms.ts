@@ -7,7 +7,7 @@ import {
   createWord,
   getRandomContent,
 } from "@/server/functions/content";
-import { Quote, Word } from "@prisma/client";
+import type { Quote, Word } from "@prisma/client";
 
 const MessagingResponse = twilio.twiml.MessagingResponse;
 

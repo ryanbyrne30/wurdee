@@ -46,6 +46,7 @@ export default function Home() {
       setCurrent(query.data);
       loadNext();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.data]);
 
   return (
