@@ -13,8 +13,8 @@ const parsePayload = (data: string) => {
     .split("\n\n")
     .forEach((line: string) => {
       const segments = line
-        .replaceAll("\n", " ")
         .replaceAll("-\n", "")
+        .replaceAll("\n", " ")
         .split(":");
       const key = segments[0]?.toLowerCase().trim();
       const value = segments[1]?.trim();
