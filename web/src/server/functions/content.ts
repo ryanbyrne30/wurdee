@@ -3,7 +3,7 @@ import { prisma } from "../db/client";
 export async function getRandomContent() {
   const content = await prisma.content.findFirst({
     orderBy: {
-      queried: "asc",
+      lastShown: "asc",
     },
     select: { id: true, queried: true, firstShown: true },
   });
