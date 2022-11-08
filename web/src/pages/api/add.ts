@@ -10,9 +10,9 @@ const parsePayload = (data: string) => {
   const payload = new Map();
   data
     .trim()
-    .split("\n")
+    .split("\n\n")
     .forEach((line: string) => {
-      const segments = line.split(":");
+      const segments = line.replaceAll("\n", " ").split(":");
       const key = segments[0]?.toLowerCase().trim();
       const value = segments[1]?.toLowerCase().trim();
       if (key && value) payload.set(key, value);
