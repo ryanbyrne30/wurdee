@@ -8,7 +8,6 @@ const MessagingResponse = twilio.twiml.MessagingResponse;
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   console.log("Received request:", req.method);
-  console.log(req.body)
   if (req.method === 'GET') {
     client.messages.create({
       body: "Testing from Twilio",
@@ -19,6 +18,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'POST') {
+    console.log("Message received", req.body.Body)
     const response = new MessagingResponse();
     response.message("Testing a response");
     console.log(response.toString())
