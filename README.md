@@ -1,5 +1,5 @@
 ## ⚠️ Unmaintained
-This website is not actively maintained. The Twilio account associated with this project is currently inactive meaning the SMS functionality does not work. The database used by this project is hosted by [PlanetScale's](https://planetscale.com/) free tier. This means the database is prone to hibernating if the website is inactive for too long. This may result in the website not displaying quotes or words. If this is the case and you would like to see the site working, contact me and I can wake up the database. Otherwise, enjoy!
+This website is not actively maintained. The [Twilio](https://www.twilio.com/en-us) account associated with this project is currently inactive meaning the SMS functionality does not work. The database used by this project is hosted by [PlanetScale's](https://planetscale.com/) free tier. This means the database is prone to hibernating if the website is inactive for too long. This may result in the website not displaying quotes or words. If this is the case and you would like to see the site working, contact me and I can wake up the database. Otherwise, enjoy!
 
 
 # Welcome to [Wurdee](https://www.wurdee.com/)!
