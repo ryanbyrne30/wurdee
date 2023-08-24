@@ -8,6 +8,8 @@ This website hosts some of the most thought provoking and inspiring quotes and w
 
 Checkout the site [here](https://www.wurdee.com/). Every time you refresh a new word or quote will appear with a counter displaying the number of times that has been seen.
 
+You can also checkout the [Instagram page](https://www.instagram.com/wurdee1).
+
 ## What Makes this awesome?
 This site was built with the intention of being accessible to anyone with a phone! Not just a smartphone, but any phone that can send a text message. A text message can be sent to the [Twilio](https://www.twilio.com/en-us) number associated with this project and it will return a random quote or word... meaning you will never be left uninspired.
 
