@@ -1,6 +1,8 @@
 ## ⚠️ Unmaintained
 This website is not actively maintained. The [Twilio](https://www.twilio.com/en-us) account associated with this project is currently inactive meaning the SMS functionality does not work. The database used by this project is hosted by [PlanetScale's](https://planetscale.com/) free tier. This means the database is prone to hibernating if the website is inactive for too long. This may result in the website not displaying quotes or words. If this is the case and you would like to see the site working, contact me and I can wake up the database. Otherwise, enjoy!
 
+![Screenshot from 2023-08-24 13-32-05](https://github.com/ryanbyrne30/wurdee/assets/33855634/9136cfdc-099b-4c94-95af-26d9f9e80aae | width=400)
+
 
 # Welcome to [Wurdee](https://www.wurdee.com/)!
 
